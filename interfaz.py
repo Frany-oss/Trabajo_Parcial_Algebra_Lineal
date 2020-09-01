@@ -3,52 +3,58 @@ Pida el ingreso de n[8,12] y genere aleatoriamente npares ordenados.
 El programa debemostrar gráficamente la curva que se aproxime mejor linealmente a los npares ordenados. 
 El usuario debe seleccionar el tipo de curva: polinomial(de grado 𝑚≤6), exponencial o potencial.
 '''
+import regresion
+from generator import *
 from tkinter import *
 from tkinter import ttk
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import random
-
 # Inicializamos los globales
 X = None
 Y = None
 N = None
 
 
-def generar_arreglo():
-    a = []
-    for i in range(50):
-        rand = random.randint(0, 25)
-        a.append(rand)
-    return a
+# def show_plot():
+#     global X, Y
+#     global N
+
+#     n = numeroPares.get()
+
+#     # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
+#     if n != N:
+#         N = n
+#         p = generar_pares(generar_arreglo(), N)
+#         X = []
+#         Y = []
+#         # print(p)
+#         for i in p:
+#             X.append(i[0])
+#             Y.append(i[1])
+
+#         # X, Y = generar_pares2(n)
+#         X.sort()
+#         X = np.array([X])
+#         Y = np.array([Y])
+
+#     # YR = regresion.regresion_lineal(X, Y, n)
+
+#     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
+
+#     plt.plot(X[0], Y[0], 'ro')
+#     plt.title('Pares generados')
+#     plt.show()
 
 
-def generar_pares(arreglo, n):
-    used_pairs = set()
-    used_axis_X = []
-    n = numeroPares.get()
-    count = 0
-    while True:
-        pair = random.sample(arreglo, 2)
-        pair = tuple(sorted(pair))
-        if pair not in used_pairs and pair[0] not in used_axis_X:
-            used_axis_X.append(pair[0])
-            used_pairs.add(pair)
-            count += 1
-            if count == n:
-                break
-    print(used_axis_X)
-    return used_pairs
-
-
-def show_plot():
+def show_plots():
     global X, Y
     global N
 
     n = numeroPares.get()
 
     # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
-    if (not X and not Y) or n != N:
+    if n != N:
         N = n
         p = generar_pares(generar_arreglo(), N)
         X = []
@@ -57,12 +63,45 @@ def show_plot():
         for i in p:
             X.append(i[0])
             Y.append(i[1])
-    print(X, Y)
-    plt.plot(X, Y, 'ro')
-    plt.title('Regresion Lineal')
+
+        # X, Y = generar_pares2(n)
+        X.sort()
+        X = np.array([X])
+        Y = np.array([Y])
+
+    YR = regresion.regresion_lineal(X, Y, n)
+    XR2, YR2 = regresion.regresion_polinomial(X, Y, n)
+    #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
+    fig, axs = plt.subplots(2, 2)
+
+    axs[0, 0].set_title('Pares Generados')
+    axs[0, 0].plot(X[0], Y[0], 'ro')
+    axs[0, 1].set_title('Regresión Lineal')
+    axs[0, 1].plot(X[0], Y[0], 'ro', X[0], YR[0])
+    axs[1, 0].set_title('Regresión Polinomial')
+    axs[1, 0].plot(X[0], Y[0], 'ro', XR2[0], YR2[0])
+    axs[1, 1].set_title('Regresión exponencial')
+    axs[1, 1].plot(X[0], Y[0], 'ro')
+
+    for ax in axs.flat:
+        ax.set(xlabel='x', ylabel='y')
+
+# Hide x labels and tick labels for top plots and y ticks for right plots.
+    for ax in axs.flat:
+        ax.label_outer()
+
     plt.show()
 
 
+# def show_regression():
+#     global X, Y
+#     print(X, Y)
+#     n = numeroPares.get()
+#     YR = regresion.regresion_polinomial(X, Y, n)
+
+#     plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
+#     plt.title('Pares generados')
+#     plt.show()
 # def regresion_lineal(x, y):
 #     slope, intercept, r, p, std_err = stats.linregress(x, y)
 #     myfunc = slope * x + intercept
@@ -71,6 +110,7 @@ def show_plot():
 #     plt.scatter(x, y)
 #     plt.plot(x, mymodel)
 #     plt.show()
+
 
 # --------- INTERFAZ DEL PROGRAMA -----------
 root = Tk()
@@ -88,16 +128,17 @@ UI_frame = Frame(root, width=800, height=400, bg='white')
 UI_frame.grid(row=0, column=0, padx=5, pady=5)
 
 # Escala para los numeros de pares ordenados que vamos a tener
-numeroPares = Scale(UI_frame, from_=8, to=12, length=200, digits=1, resolution=1, orient=HORIZONTAL, label="Numero de Pares")
+numeroPares = Scale(UI_frame, from_=8, to=12, length=200, digits=1,
+                    resolution=1, orient=HORIZONTAL, label="Numero de Pares")
 numeroPares.grid(row=0, column=1, padx=5, pady=5)
 
 # Boton para generar los pares ordenados
-Button(UI_frame, text="Generar Pares", command=show_plot, bg='light green').grid(row=0, column=4, padx=10, pady=10)
+Button(UI_frame, text="Generar Pares", command=show_plots,
+       bg='light green').grid(row=0, column=4, padx=10, pady=10)
 
-# Boton para generar la regresión lineal
-Button(UI_frame, text="Regresión Lineal", command='', bg='light blue').grid(row=0, column=5, padx=10, pady=10)
 
 # Boton para salir del programa
-Button(UI_frame, text="Salir", command=exit, bg='red').grid(row=0, column=6, padx=10, pady=10)
+Button(UI_frame, text="Salir", command=exit, bg='red').grid(
+    row=0, column=6, padx=10, pady=10)
 
 root.mainloop()
