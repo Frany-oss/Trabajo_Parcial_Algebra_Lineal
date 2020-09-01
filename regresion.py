@@ -31,3 +31,7 @@ def regresion_polinomial(X, Y, n):
     x_2 = x**2
     YR = x_2*R[0][0]+R[1][0]*x + R[2][0]
     return x, YR
+
+
+def regresion_exponencial(X, Y, n):
+    pass
