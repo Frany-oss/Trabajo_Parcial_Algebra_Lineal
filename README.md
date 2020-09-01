@@ -9,8 +9,14 @@ El usuario debe seleccionar el tipo de curva: polinomial(de grado 𝑚≤6), exp
 - numpy
 ## Instalacion 
 Clonar la repo:
-`git clone https://github.com/renzodamgo/Trabajo_Parcial_Algebra_Lineal.git
-`
+
+```bash
+$ git clone https://github.com/renzodamgo/Trabajo_Parcial_Algebra_Lineal.git
+```
+Instalar matplot y numpy
+```bash
+$ pip install -r requirements.txt
+```
 ## Interfaz
 Se da al usuario un slider donde podra seleccional la cantidad de pares que desee entre [8,12]
 ![interfaz](img/interfaz.png)
