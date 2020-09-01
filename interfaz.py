@@ -3,50 +3,17 @@ Pida el ingreso de n[8,12] y genere aleatoriamente npares ordenados.
 El programa debemostrar gráficamente la curva que se aproxime mejor linealmente a los npares ordenados. 
 El usuario debe seleccionar el tipo de curva: polinomial(de grado 𝑚≤6), exponencial o potencial.
 '''
+import regresion
+from generator import *
 from tkinter import *
 from tkinter import ttk
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import random
-import numpy as np
-
 # Inicializamos los globales
 X = None
 Y = None
 N = None
-
-
-def generar_arreglo():
-    a = []
-    for i in range(50):
-        rand = random.randint(0, 25)
-        a.append(rand)
-    return a
-
-
-def generar_pares(arreglo, n):
-    used_pairs = set()
-    used_axis_X = []
-    n = numeroPares.get()
-    count = 0
-    while True:
-        pair = random.sample(arreglo, 2)
-        pair = tuple(sorted(pair))
-        if pair not in used_pairs and pair[0] not in used_axis_X:
-            used_axis_X.append(pair[0])
-            used_pairs.add(pair)
-            count += 1
-            if count == n:
-                break
-    # print(used_axis_X)
-    return used_pairs
-
-
-def generar_pares2(n):
-    x_rand = random.sample(range(0, 100), n)
-    y_rand = random.sample(range(0, 100), n)
-    x_rand.sort()
-    return x_rand, y_rand
 
 
 def show_plot():
@@ -65,34 +32,30 @@ def show_plot():
         for i in p:
             X.append(i[0])
             Y.append(i[1])
-        print(X)
+
         # X, Y = generar_pares2(n)
         X.sort()
         X = np.array([X])
         Y = np.array([Y])
-        print(X)
 
-    YR = regresion_lineal(X, Y, n)
+    # YR = regresion.regresion_lineal(X, Y, n)
 
     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-    print(X, YR)
-    plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
-    plt.title('Regresion Lineal')
+
+    plt.plot(X[0], Y[0], 'ro')
+    plt.title('Pares generados')
     plt.show()
 
 
-def regresion_lineal(X, Y, n):
-    X_o = X
+def show_regression():
+    global X, Y
+    print(X, Y)
+    n = numeroPares.get()
+    YR = regresion.regresion_lineal(X, Y, n)
 
-    unos = np.array([np.ones(n)])
-    X = np.append(X, unos, axis=0)
-    X = np.rot90(X, 3)
-    Y = np.rot90(Y, 3)
-    R = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-
-    YR = X_o*R[1][0]+R[0][0]
-
-    return YR
+    plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
+    plt.title('Pares generados')
+    plt.show()
 # def regresion_lineal(x, y):
 #     slope, intercept, r, p, std_err = stats.linregress(x, y)
 #     myfunc = slope * x + intercept
@@ -128,7 +91,7 @@ Button(UI_frame, text="Generar Pares", command=show_plot,
        bg='light green').grid(row=0, column=4, padx=10, pady=10)
 
 # Boton para generar la regresión lineal
-Button(UI_frame, text="Regresión Lineal", command='',
+Button(UI_frame, text="Regresión Lineal", command=show_regression,
        bg='light blue').grid(row=0, column=5, padx=10, pady=10)
 
 # Boton para salir del programa
