@@ -70,7 +70,7 @@ def show_plots():
         Y = np.array([Y])
 
     YR = regresion.regresion_lineal(X, Y, n)
-    YR2 = regresion.regresion_polinomial(X, Y, n)
+    XR2, YR2 = regresion.regresion_polinomial(X, Y, n)
     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
     fig, axs = plt.subplots(2, 2)
 
@@ -79,7 +79,7 @@ def show_plots():
     axs[0, 1].set_title('Regresión Lineal')
     axs[0, 1].plot(X[0], Y[0], 'ro', X[0], YR[0])
     axs[1, 0].set_title('Regresión Polinomial')
-    axs[1, 0].plot(X[0], Y[0], 'ro', X[0], YR2[0])
+    axs[1, 0].plot(X[0], Y[0], 'ro', XR2[0], YR2[0])
     axs[1, 1].set_title('Regresión exponencial')
     axs[1, 1].plot(X[0], Y[0], 'ro')
 

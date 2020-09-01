@@ -26,6 +26,8 @@ def regresion_polinomial(X, Y, n):
     Y = np.rot90(Y, 3)
     R = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
 
-    YR = X_2*R[0][0]+R[1][0]*X_o + R[2][0]
-
-    return YR
+    # YR = X_2*R[0][0]+R[1][0]*X_o + R[2][0]
+    x = np.array([np.arange(25)])
+    x_2 = x**2
+    YR = x_2*R[0][0]+R[1][0]*x + R[2][0]
+    return x, YR
