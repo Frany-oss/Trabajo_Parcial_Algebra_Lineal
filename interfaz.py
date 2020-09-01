@@ -16,7 +16,38 @@ Y = None
 N = None
 
 
-def show_plot():
+# def show_plot():
+#     global X, Y
+#     global N
+
+#     n = numeroPares.get()
+
+#     # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
+#     if n != N:
+#         N = n
+#         p = generar_pares(generar_arreglo(), N)
+#         X = []
+#         Y = []
+#         # print(p)
+#         for i in p:
+#             X.append(i[0])
+#             Y.append(i[1])
+
+#         # X, Y = generar_pares2(n)
+#         X.sort()
+#         X = np.array([X])
+#         Y = np.array([Y])
+
+#     # YR = regresion.regresion_lineal(X, Y, n)
+
+#     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
+
+#     plt.plot(X[0], Y[0], 'ro')
+#     plt.title('Pares generados')
+#     plt.show()
+
+
+def show_plots():
     global X, Y
     global N
 
@@ -38,24 +69,39 @@ def show_plot():
         X = np.array([X])
         Y = np.array([Y])
 
-    # YR = regresion.regresion_lineal(X, Y, n)
-
-    #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-
-    plt.plot(X[0], Y[0], 'ro')
-    plt.title('Pares generados')
-    plt.show()
-
-
-def show_regression():
-    global X, Y
-    print(X, Y)
-    n = numeroPares.get()
     YR = regresion.regresion_lineal(X, Y, n)
+    YR2 = regresion.regresion_polinomial(X, Y, n)
+    #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
+    fig, axs = plt.subplots(2, 2)
 
-    plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
-    plt.title('Pares generados')
+    axs[0, 0].set_title('Pares Generados')
+    axs[0, 0].plot(X[0], Y[0], 'ro')
+    axs[0, 1].set_title('Regresión Lineal')
+    axs[0, 1].plot(X[0], Y[0], 'ro', X[0], YR[0])
+    axs[1, 0].set_title('Regresión Polinomial')
+    axs[1, 0].plot(X[0], Y[0], 'ro', X[0], YR2[0])
+    axs[1, 1].set_title('Regresión exponencial')
+    axs[1, 1].plot(X[0], Y[0], 'ro')
+
+    for ax in axs.flat:
+        ax.set(xlabel='x', ylabel='y')
+
+# Hide x labels and tick labels for top plots and y ticks for right plots.
+    for ax in axs.flat:
+        ax.label_outer()
+
     plt.show()
+
+
+# def show_regression():
+#     global X, Y
+#     print(X, Y)
+#     n = numeroPares.get()
+#     YR = regresion.regresion_polinomial(X, Y, n)
+
+#     plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
+#     plt.title('Pares generados')
+#     plt.show()
 # def regresion_lineal(x, y):
 #     slope, intercept, r, p, std_err = stats.linregress(x, y)
 #     myfunc = slope * x + intercept
@@ -87,12 +133,9 @@ numeroPares = Scale(UI_frame, from_=8, to=12, length=200, digits=1,
 numeroPares.grid(row=0, column=1, padx=5, pady=5)
 
 # Boton para generar los pares ordenados
-Button(UI_frame, text="Generar Pares", command=show_plot,
+Button(UI_frame, text="Generar Pares", command=show_plots,
        bg='light green').grid(row=0, column=4, padx=10, pady=10)
 
-# Boton para generar la regresión lineal
-Button(UI_frame, text="Regresión Lineal", command=show_regression,
-       bg='light blue').grid(row=0, column=5, padx=10, pady=10)
 
 # Boton para salir del programa
 Button(UI_frame, text="Salir", command=exit, bg='red').grid(
