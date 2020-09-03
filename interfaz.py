@@ -16,37 +16,6 @@ Y = None
 N = None
 
 
-# def show_plot():
-#     global X, Y
-#     global N
-
-#     n = numeroPares.get()
-
-#     # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
-#     if n != N:
-#         N = n
-#         p = generar_pares(generar_arreglo(), N)
-#         X = []
-#         Y = []
-#         # print(p)
-#         for i in p:
-#             X.append(i[0])
-#             Y.append(i[1])
-
-#         # X, Y = generar_pares2(n)
-#         X.sort()
-#         X = np.array([X])
-#         Y = np.array([Y])
-
-#     # YR = regresion.regresion_lineal(X, Y, n)
-
-#     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-
-#     plt.plot(X[0], Y[0], 'ro')
-#     plt.title('Pares generados')
-#     plt.show()
-
-
 def show_plots():
     global X, Y
     global N
@@ -91,25 +60,6 @@ def show_plots():
         ax.label_outer()
 
     plt.show()
-
-
-# def show_regression():
-#     global X, Y
-#     print(X, Y)
-#     n = numeroPares.get()
-#     YR = regresion.regresion_polinomial(X, Y, n)
-
-#     plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
-#     plt.title('Pares generados')
-#     plt.show()
-# def regresion_lineal(x, y):
-#     slope, intercept, r, p, std_err = stats.linregress(x, y)
-#     myfunc = slope * x + intercept
-#     mymodel = list(map(myfunc, x))
-
-#     plt.scatter(x, y)
-#     plt.plot(x, mymodel)
-#     plt.show()
 
 
 # --------- INTERFAZ DEL PROGRAMA -----------
