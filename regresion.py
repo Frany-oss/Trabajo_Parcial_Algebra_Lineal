@@ -34,4 +34,6 @@ def regresion_polinomial(X, Y, n):
 
 
 def regresion_exponencial(X, Y, n):
+    X_o = X
+    unos = np.array([np.ones(n)])
     pass
