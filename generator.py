@@ -9,7 +9,6 @@ def generar_arreglo():
         a.append(rand)
     return a
 
-
 def generar_pares(arreglo, n):
     used_pairs = set()
     used_axis_X = []
@@ -25,10 +24,3 @@ def generar_pares(arreglo, n):
                 break
     # print(used_axis_X)
     return used_pairs
-
-
-def generar_pares2(n):
-    x_rand = random.sample(range(0, 100), n)
-    y_rand = random.sample(range(0, 100), n)
-    x_rand.sort()
-    return x_rand, y_rand
