@@ -40,8 +40,8 @@ def regresion_polinomial(X, Y, grado):
 
     R = regresion(A, Y)
 
-    X_i = np.array([np.arange(max_n+1)])
-    YR = np.array([np.zeros(max_n+1)])
+    X_i = np.array([np.arange(0, max_n+1, 0.1)])
+    YR = np.array([np.zeros((max_n+1)*10)])
     for i in range(grado+1):
         g = grado - i
         X_a = X_i**g
