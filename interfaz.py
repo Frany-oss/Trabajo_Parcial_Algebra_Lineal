@@ -23,7 +23,7 @@ def show_plots():
     global N
 
     n = numeroPares.get()
-    a = numerogrado.get()
+    grado = numerogrado.get()
     # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
     if n != N:
         N = n
@@ -41,13 +41,13 @@ def show_plots():
         Y = np.array([Y])
 
     if RegresionMenu.get() == 'Regresión Lineal':
-        YR = regresion.regresion_lineal(X, Y, n)
+        YR = regresion.regresion_lineal(X, Y)
         plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
-    
+
     elif RegresionMenu.get() == 'Regresión Polinomial':
-        XR2, YR2 = regresion.regresion_polinomial(X, Y, n, a)
+        XR2, YR2 = regresion.regresion_polinomial(X, Y, grado)
         plt.plot(X[0], Y[0], 'ro', XR2[0], YR2[0])
-    
+
     elif RegresionMenu.get() == 'Regresión Potencial':
         XR3, YR3 = regresion.regresion_potential(X, Y, n)
         plt.plot(X[0], Y[0], 'ro', XR3[0], YR3[0])
@@ -57,7 +57,6 @@ def show_plots():
         plt.plot(X[0], Y[0], 'ro', XR4[0], YR4[0])
     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
     #fig, axs = plt.subplots(2, 2)
-
 
     #axs[1, 1].set_title('Regresión exponencial')
     #axs[1, 1].plot(X[0], Y[0], 'ro')
@@ -79,6 +78,7 @@ root.geometry('630x200')
 root.config(bg='white')
 
 select_regresion = StringVar()
+
 
 def exit():
     return root.destroy()
@@ -105,7 +105,8 @@ Button(UI_frame, text="Generar Pares", command=show_plots,
 Button(UI_frame, text="Salir", command=exit, bg='red').grid(
     row=0, column=6, padx=10, pady=10)
 
-RegresionMenu = ttk.Combobox(UI_frame, textvariable = select_regresion, values = ['Regresión Lineal', 'Regresión Polinomial', 'Regresión Exponencial', 'Regresión Potencial'])
-RegresionMenu.grid(row = 0, column = 5, padx = 3, pady = 3)
+RegresionMenu = ttk.Combobox(UI_frame, textvariable=select_regresion, values=[
+                             'Regresión Lineal', 'Regresión Polinomial', 'Regresión Exponencial', 'Regresión Potencial'])
+RegresionMenu.grid(row=0, column=5, padx=3, pady=3)
 
 root.mainloop()
