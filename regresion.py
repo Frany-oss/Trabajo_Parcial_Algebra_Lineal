@@ -1,36 +1,53 @@
 import numpy as np
-import math
 
-def regresion_lineal(X, Y, n = 0):
-    X_o = X
 
+def regresion(A, B):
+    # Rotar matrices
+    A = np.rot90(A, 3)
+    B = np.rot90(B, 3)
+    # Calcular con la fórmula
+    multi_1 = np.dot(A.T, A)
+    multi_2 = np.dot(A.T, B)
+    R = np.dot(np.linalg.inv(multi_1), multi_2)
+
+    return R
+
+
+def regresion_lineal(X, Y):
+
+    n = len(X[0])
+    # creas la matriz y le agregas una columna de 1s
     unos = np.array([np.ones(n)])
-    X = np.append(X, unos, axis=0)
-    X = np.rot90(X, 3)
-    Y = np.rot90(Y, 3)
-    R = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-
-    YR = X_o*R[1][0]+R[0][0]
+    A = np.append(X, unos, axis=0)
+    R = regresion(A, Y)
+    print[R]
+    YR = X*R[1][0]+R[0][0]
 
     return YR
 
 
-def regresion_polinomial(X, Y, n, a):
+def regresion_polinomial(X, Y, grado):
+    n = len(X[0])
+    # maximo elemento de X
+    max_n = X[0][n-1]
 
-    X_o = X
-    unos = np.array([np.ones(n)])
-    X_e = X**a
-    X = np.append(unos, X, axis=0)
-    X = np.append(X, X_e, axis=0)
-    X = np.rot90(X, 3)
-    Y = np.rot90(Y, 3)
-    R = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
+    for g in range(0, grado+1):
+        if g == 0:
+            A = np.array([np.ones(n)])
+        else:
+            X_e = X**g
+            A = np.append(A, X_e, axis=0)
 
-    # YR = X_2*R[0][0]+R[1][0]*X_o + R[2][0]
-    x = np.array([np.arange(25)])
-    x_a = x**a
-    YR = x_a*R[0][0]+R[1][0]*x + R[2][0]
-    return x, YR
+    R = regresion(A, Y)
+
+    X_i = np.array([np.arange(0, max_n+1, 0.1)])
+    YR = np.array([np.zeros((max_n+1)*10)])
+    for i in range(grado+1):
+        g = grado - i
+        X_a = X_i**g
+        YR = YR + X_a*R[i][0]
+
+    return X_i, YR
 
 
 def regresion_potential(x, y, n):
@@ -39,7 +56,7 @@ def regresion_potential(x, y, n):
 
     lna, b = regresion_lineal(A, B, n)
     a = pow(math.e, lna)
-   
+
     x1 = [i for i in range(2, 14)]
     y1 = [a*pow(i, b) for i in x]
 
@@ -52,7 +69,7 @@ def regresion_exponencial(x, y, n):
 
     lna, b = regresion_lineal(A, B, n)
     a = pow(math.e, lna)
-    x1 = [i for i in range(2,14)]
+    x1 = [i for i in range(2, 14)]
     y1 = [a*pow(math.e, b*i) for i in x]
 
     return x, y1
