@@ -74,6 +74,6 @@ def showGraph(x, y, regression_type):
     plt.show()
 
 
-showGraph(x, y, polynomial)
+# showGraph(x, y, polynomial)
 showGraph(x, y, potential)
-showGraph(x, y, exponential)
+# showGraph(x, y, exponential)
