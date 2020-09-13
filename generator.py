@@ -5,9 +5,10 @@ import random
 def generar_arreglo():
     a = []
     for i in range(50):
-        rand = random.randint(0, 25)
+        rand = random.randint(1, 25)
         a.append(rand)
     return a
+
 
 def generar_pares(arreglo, n):
     used_pairs = set()

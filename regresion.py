@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 
 def regresion(A, B):
@@ -20,7 +21,7 @@ def regresion_lineal(X, Y):
     unos = np.array([np.ones(n)])
     A = np.append(X, unos, axis=0)
     R = regresion(A, Y)
-    print[R]
+
     YR = X*R[1][0]+R[0][0]
 
     return YR
@@ -40,7 +41,7 @@ def regresion_polinomial(X, Y, grado):
 
     R = regresion(A, Y)
 
-    X_i = np.array([np.arange(0, max_n+1, 0.1)])
+    X_i = np.array([np.arange(1, max_n+1, 0.1)])
     YR = np.array([np.zeros((max_n+1)*10)])
     for i in range(grado+1):
         g = grado - i
@@ -63,13 +64,15 @@ def regresion_potential(x, y, n):
     return x, y1
 
 
-def regresion_exponencial(x, y, n):
-    A = np.array([np.ones(n)])
-    B = np.array([[np.log10(i)] for i in y])
-
-    lna, b = regresion_lineal(A, B, n)
-    a = pow(math.e, lna)
-    x1 = [i for i in range(2, 14)]
-    y1 = [a*pow(math.e, b*i) for i in x]
-
-    return x, y1
+def regresion_exponencial(X, Y):
+    n = len(X[0])
+    max_n = X[0][n-1]
+    unos = np.array([np.ones(n)])
+    logX = np.log(X)
+    A = np.append(logX, unos, axis=0)
+    B = np.log(Y)
+    R = regresion(A, B)
+    X_i = np.array([np.arange(1, max_n+1, 0.1)])
+    YR = pow(math.e, R[0][0])*pow(X_i, R[1][0])
+    print(YR)
+    return X_i, YR

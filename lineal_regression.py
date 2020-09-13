@@ -56,7 +56,7 @@ def exponential(x, y):
     lna, b = lineal_regression(A, B)
     a = pow(math.e, lna)
     print(a, b)
-    x1 = [i for i in range(2, 14)]
+    x1 = [i for i in range(2, 9, 1)]
     y1 = [a*pow(math.e, b*i) for i in x]
     return x, y1
 
@@ -75,5 +75,5 @@ def showGraph(x, y, regression_type):
 
 
 # showGraph(x, y, polynomial)
-showGraph(x, y, potential)
-# showGraph(x, y, exponential)
+# showGraph(x, y, potential)
+showGraph(x, y, exponential)

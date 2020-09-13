@@ -53,7 +53,7 @@ def show_plots():
         plt.plot(X[0], Y[0], 'ro', XR3[0], YR3[0])
 
     elif RegresionMenu.get() == 'Regresión Exponencial':
-        XR4, YR4 = regresion.regresion_exponencial(X, Y, n)
+        XR4, YR4 = regresion.regresion_exponencial(X, Y)
         plt.plot(X[0], Y[0], 'ro', XR4[0], YR4[0])
     #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
     #fig, axs = plt.subplots(2, 2)
