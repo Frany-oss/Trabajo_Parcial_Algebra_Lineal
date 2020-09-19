@@ -3,72 +3,50 @@ Pida el ingreso de n[8,12] y genere aleatoriamente npares ordenados.
 El programa debemostrar gráficamente la curva que se aproxime mejor linealmente a los npares ordenados. 
 El usuario debe seleccionar el tipo de curva: polinomial(de grado 𝑚≤6), exponencial o potencial.
 '''
-
 import regresion
-from generator import *
+import generator
 from tkinter import *
 from tkinter import ttk
-import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
-# Inicializamos los globales
 
+# Inicializamos los globales
 X = None
 Y = None
 N = None
+V = None
 
+def showPlots():
+	global X, Y, N, V
 
-def show_plots():
-    global X, Y
-    global N
+	n = numeroPares.get()
+	G = numeroGrado.get()
 
-    n = numeroPares.get()
-    grado = numerogrado.get()
-    # Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
-    if n != N:
-        N = n
-        p = generar_pares(generar_arreglo(), N)
-        X = []
-        Y = []
-        # print(p)
-        for i in p:
-            X.append(i[0])
-            Y.append(i[1])
+	# Checkea si X y Y existen o si se pide otra cantidad de pares en el slider
+	if n != N:
+		N = n
+		#0 = desordenado , 1 = ordenado
+		X,Y = generator.generateArray(N,1)
 
-        # X, Y = generar_pares2(n)
-        X.sort()
-        X = np.array([X])
-        Y = np.array([Y])
+	plt.plot(X, Y, 'ro')
+	if RegresionMenu.get() == V[0]:
+		LR = regresion.linearRegression(X,Y)
+		plt.plot(X, LR[0])
+		plt.xlabel(LR[1])
+	elif RegresionMenu.get() == V[1]:
+		PR = regresion.polynominomialRegression(X,Y,G)
+		plt.plot(X, PR[0])
+		plt.xlabel(PR[1])
+	elif RegresionMenu.get() == V[2]:
+		PoR = regresion.potentialRegression(X,Y)
+		plt.plot(X, PoR[0])
+		plt.xlabel(PoR[1])
+	elif RegresionMenu.get() == V[3]:
+		ER = regresion.exponentialRegression(X,Y)
+		plt.plot(X, ER[0])
+		plt.xlabel(ER[1])
 
-    if RegresionMenu.get() == 'Regresión Lineal':
-        YR = regresion.regresion_lineal(X, Y)
-        plt.plot(X[0], Y[0], 'ro', X[0], YR[0])
-
-    elif RegresionMenu.get() == 'Regresión Polinomial':
-        XR2, YR2 = regresion.regresion_polinomial(X, Y, grado)
-        plt.plot(X[0], Y[0], 'ro', XR2[0], YR2[0])
-
-    elif RegresionMenu.get() == 'Regresión Potencial':
-        XR3, YR3 = regresion.regresion_potential(X, Y, n)
-        plt.plot(X[0], Y[0], 'ro', XR3[0], YR3[0])
-
-    elif RegresionMenu.get() == 'Regresión Exponencial':
-        XR4, YR4 = regresion.regresion_exponencial(X, Y)
-        plt.plot(X[0], Y[0], 'ro', XR4[0], YR4[0])
-    #regression = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, Y))
-    #fig, axs = plt.subplots(2, 2)
-
-    #axs[1, 1].set_title('Regresión exponencial')
-    #axs[1, 1].plot(X[0], Y[0], 'ro')
-
-    # for ax in axs.flat:
-    #     ax.set(xlabel='x', ylabel='y')
-
-    # for ax in axs.flat:
-    #     ax.label_outer()
-
-    plt.show()
-
+	plt.title(RegresionMenu.get())
+	plt.show()
 
 # --------- INTERFAZ DEL PROGRAMA -----------
 root = Tk()
@@ -77,36 +55,31 @@ root.maxsize(950, 600)
 root.geometry('630x200')
 root.config(bg='white')
 
-select_regresion = StringVar()
-
+selectRegresion = StringVar()
 
 def exit():
-    return root.destroy()
-
+	return root.destroy()
 
 UI_frame = Frame(root, width=800, height=400, bg='white')
 UI_frame.grid(row=0, column=0, padx=5, pady=5)
 
 # Escala para los numeros de pares ordenados que vamos a tener
-numeroPares = Scale(UI_frame, from_=8, to=12, length=200, digits=1,
-                    resolution=1, orient=HORIZONTAL, label="Numero de Pares")
+numeroPares = Scale(UI_frame, from_=8, to=12, length=200, digits=1, resolution=1, orient=HORIZONTAL, label="Numero de Pares")
 numeroPares.grid(row=0, column=1, padx=5, pady=5)
 
 # Escala para medir el grado polinomial que va desde 2 a 6
-numerogrado = Scale(UI_frame, from_=2, to=6, length=200, digits=1,
-                    resolution=1, orient=HORIZONTAL, label="Grado Polinomial")
-numerogrado.grid(row=1, column=1, padx=5, pady=5)
+numeroGrado = Scale(UI_frame, from_=2, to=6, length=200, digits=1, resolution=1, orient=HORIZONTAL, label="Grado Polinomial")
+numeroGrado.grid(row=1, column=1, padx=5, pady=5)
 
 # Boton para generar los pares ordenados
-Button(UI_frame, text="Generar Pares", command=show_plots,
-       bg='light green').grid(row=0, column=4, padx=10, pady=10)
+Button(UI_frame, text="Graficar", command=showPlots, bg='light green').grid(row=0, column=4, padx=10, pady=10)
 
 # Boton para salir del programa
-Button(UI_frame, text="Salir", command=exit, bg='red').grid(
-    row=0, column=6, padx=10, pady=10)
+Button(UI_frame, text="Salir", command=exit, bg='red').grid(row=0, column=6, padx=10, pady=10)
 
-RegresionMenu = ttk.Combobox(UI_frame, textvariable=select_regresion, values=[
-                             'Regresión Lineal', 'Regresión Polinomial', 'Regresión Exponencial', 'Regresión Potencial'])
+V = ['Regresión Lineal', 'Regresión Polinomial', 'Regresión Potencial', 'Regresión Exponencial']
+RegresionMenu = ttk.Combobox(UI_frame, textvariable=selectRegresion, values=V)
+RegresionMenu.current(0)
 RegresionMenu.grid(row=0, column=5, padx=3, pady=3)
 
 root.mainloop()
