@@ -14,13 +14,10 @@ X = None
 Y = None
 N = None
 O = None
-start = False
-
-
 
 # Mostrar el grafico
 def showPlots():
-	global X, Y, N, O, start
+	global X, Y, N, O
 	n = numeroPares.get()
 	o = check.get()
 	G = numeroGrado.get()
@@ -34,7 +31,6 @@ def showPlots():
 	if not plt.get_fignums():
 		plt.figure(figsize=(9,5))
 		plt.plot(X, Y, 'ro')
-
 	if RegresionMenu.get() == V[0]:
 		LR = regresion.linearRegression(X,Y)
 		plt.plot(X, LR[0], label = RegresionMenu.get())
