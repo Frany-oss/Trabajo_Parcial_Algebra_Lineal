@@ -1,4 +1,8 @@
 # Trabajo Parcial Algebra Lineal
+## Integrantes
+- Francesco Bassino
+- Renzo Mondragón
+- Renzo Damián
 ## Objetivo
 Pida el ingreso de n[8,12] y genere aleatoriamente npares ordenados. 
 El programa debemostrar gráficamente la curva que se aproxime mejor linealmente a los n pares ordenados. 
@@ -22,5 +26,12 @@ Se da al usuario un slider donde podra seleccional la cantidad de pares que dese
 ![interfaz](img/interfaz.png)
 
 Al generar pares se grafica su regresión lineal además de la regresion polinomial y la regresión exponencial.
-![interfaz](img/resultado.png)
-
+## Resultados
+### Gáfica de la Regresión Lineal
+![interfaz](img/lineal.png)
+### Gáfica de la Regresión polinomial
+![interfaz](img/polinomial.png)
+### Gáfica de la Regresión Potencial
+![interfaz](img/potencial.png)
+### Gáfica de la Exponencial
+![interfaz](img/exponencial.png)
