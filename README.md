@@ -26,5 +26,12 @@ Se da al usuario un slider donde podra seleccional la cantidad de pares que dese
 ![interfaz](img/interfaz.png)
 
 Al generar pares se grafica su regresión lineal además de la regresion polinomial y la regresión exponencial.
-![interfaz](img/resultado.png)
-
+## Resultados
+### Gáfica de la Regresión Lineal
+![interfaz](img/lineal.png)
+### Gáfica de la Regresión polinomial
+![interfaz](img/polinomial.png)
+### Gáfica de la Regresión Potencial
+![interfaz](img/potencial.png)
+### Gáfica de la Exponencial
+![interfaz](img/exponencial.png)
