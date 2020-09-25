@@ -1,4 +1,8 @@
 # Trabajo Parcial Algebra Lineal
+## Integrantes
+- Franco Bassinos
+- Renzo Mondragón
+- Renzo Damián
 ## Objetivo
 Pida el ingreso de n[8,12] y genere aleatoriamente npares ordenados. 
 El programa debemostrar gráficamente la curva que se aproxime mejor linealmente a los n pares ordenados. 
