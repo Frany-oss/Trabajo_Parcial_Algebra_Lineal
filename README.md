@@ -1,6 +1,6 @@
 # Trabajo Parcial Algebra Lineal
 ## Integrantes
-- Franco Bassinos
+- Francesco Bassino
 - Renzo Mondragón
 - Renzo Damián
 ## Objetivo
